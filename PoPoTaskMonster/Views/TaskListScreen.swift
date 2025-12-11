@@ -20,7 +20,7 @@ struct TaskListScreen: View {
 
             VStack(spacing: 20) {
                 Text("Task List")
-                    .font(.system(size: 38, weight: .bold))
+                    .font(.custom("krungthep", size: 38))
                     .foregroundColor(Color(red: 0/255, green: 63/255, blue: 103/255))
                     .padding(.top, 35)
 
@@ -32,12 +32,13 @@ struct TaskListScreen: View {
 
                     Circle()
                         .trim(from: 0, to: viewModel.progress)
-                        .stroke(Color.blue, style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                        .stroke(Color.button, style: StrokeStyle(lineWidth: 12, lineCap: .round))
                         .rotationEffect(.degrees(-90))
                         .frame(width: 150, height: 150)
 
                     Text("\(Int(viewModel.progress * 100))%")
                         .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.text)
                 }
 
                 // Tasks List
@@ -74,11 +75,11 @@ struct TaskListScreen: View {
             }) {
                 ZStack {
                     Circle()
-                        .fill(Color.blue)
-                        .frame(width: 60, height: 60)
+                        .fill(Color.button)
+                        .frame(width: 90, height: 90)
 
                     Image(systemName: "plus")
-                        .font(.system(size: 28))
+                        .font(.system(size: 42).bold())
                         .foregroundColor(.white)
                 }
             }

@@ -39,7 +39,7 @@ struct ReviewTaskScreen: View {
                         .foregroundStyle(.text)
                         .padding(.top, 20)
                     
-                    Text("Edit if needed")
+                    Text("Edit if needed ☺️")
                         .font(.custom("krungthep", size: 18))
                         .foregroundStyle(.text.opacity(0.7))
                     

@@ -4,13 +4,11 @@
 //
 //  Created by Nouf Alshawoosh on 02/12/2025.
 //
-
 import SwiftUI
 
 struct AddTaskScreen : View {
     @ObservedObject var viewModel: TaskVM
     @State private var description: String = ""
-    @State private var nextScreen = false
     @FocusState private var isFocused : Bool
     @Environment(\.dismiss) var dismiss
     
@@ -67,8 +65,6 @@ struct AddTaskScreen : View {
                     Button(action: {
                         if !description.isEmpty {
                             viewModel.generateTask(from: description)
-                            description = ""
-                            dismiss()
                         }
                     }, label: { Text("Start")
                             .font(.custom("krungthep", size: 36))
@@ -88,6 +84,14 @@ struct AddTaskScreen : View {
         .navigationBarBackButtonHidden(false)
         .navigationDestination(isPresented: $viewModel.shouldShowRewriteScreen) {
             ContentView(viewModel: viewModel)
+        }
+        .navigationDestination(isPresented: $viewModel.shouldShowReviewScreen) {
+            ReviewTaskScreen(
+                viewModel: viewModel,
+                taskTitle: viewModel.pendingTaskTitle,
+                subtasks: viewModel.pendingSubtasks,
+                originalDescription: viewModel.pendingDescription
+            )
         }
     }
 }

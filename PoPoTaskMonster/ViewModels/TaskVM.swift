@@ -19,6 +19,10 @@ class TaskVM: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var shouldShowRewriteScreen = false
+    @Published var shouldShowReviewScreen = false
+    @Published var pendingTaskTitle = ""
+    @Published var pendingSubtasks: [SubTaskModel] = []
+    @Published var pendingDescription = ""
     
     private let apiKey = Secret.apiKey
     private let tasksKey = "savedTasks"
@@ -54,6 +58,7 @@ class TaskVM: ObservableObject {
         isLoading = true
         errorMessage = nil
         shouldShowRewriteScreen = false
+        shouldShowReviewScreen = false
         
         let prompt = """
             Task: \(description)
@@ -139,14 +144,11 @@ class TaskVM: ObservableObject {
             }
         }
         
-        let task = TaskModel(
-            taskTitle: title,
-            taskDescription: description,
-            tasksList: subtasks,
-            isTaskCompleted: false
-        )
-        
-        tasksList.append(task)
+        // Store for review screen
+        pendingTaskTitle = title
+        pendingSubtasks = subtasks
+        pendingDescription = description
+        shouldShowReviewScreen = true
     }
     
     // MARK: - Task Management Methods

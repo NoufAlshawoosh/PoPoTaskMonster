@@ -31,7 +31,7 @@ struct AddTaskScreen : View {
                     
                     Spacer().frame(height: 40)
                     
-                    Text("What is on your mind 🧠 ?")
+                    Text("What is filling your mind 🧠 ?")
                         .font(.custom("krungthep", size: 18))
                         .foregroundStyle(.text)
                     

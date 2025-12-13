@@ -31,7 +31,7 @@ struct AddTaskScreen : View {
                     
                     Spacer().frame(height: 40)
                     
-                    Text("What is filling your mind 🧠 ?")
+                    Text("What is on your mind 🧠 ?")
                         .font(.custom("krungthep", size: 18))
                         .foregroundStyle(.text)
                     
@@ -92,6 +92,12 @@ struct AddTaskScreen : View {
                 subtasks: viewModel.pendingSubtasks,
                 originalDescription: viewModel.pendingDescription
             )
+        }
+        .onChange(of: viewModel.shouldDismissToTaskList) { oldValue, newValue in
+            if newValue {
+                viewModel.shouldDismissToTaskList = false
+                dismiss()
+            }
         }
     }
 }

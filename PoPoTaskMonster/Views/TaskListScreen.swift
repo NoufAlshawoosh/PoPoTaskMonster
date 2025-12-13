@@ -49,7 +49,9 @@ struct TaskListScreen: View {
                         }
                     }
                     .padding(.bottom, 30)
-                }
+                }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                Spacer().frame(height: 40)
                 
                 // Hidden NavigationLink for programmatic navigation
                 NavigationLink(
@@ -68,6 +70,7 @@ struct TaskListScreen: View {
                 }
                 .hidden()
             }
+            
 
             // Add Button
             Button(action: {
@@ -76,10 +79,10 @@ struct TaskListScreen: View {
                 ZStack {
                     Circle()
                         .fill(Color.button)
-                        .frame(width: 90, height: 90)
+                        .frame(width: 70, height: 70)
 
                     Image(systemName: "plus")
-                        .font(.system(size: 42).bold())
+                        .font(.system(size: 36).bold())
                         .foregroundColor(.white)
                 }
             }

@@ -10,6 +10,7 @@ import SwiftUI
 struct ReviewTaskScreen: View {
     @ObservedObject var viewModel: TaskVM
     @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentationMode
     
     @State private var taskTitle: String
     @State private var subtasks: [String]
@@ -39,7 +40,7 @@ struct ReviewTaskScreen: View {
                         .foregroundStyle(.text)
                         .padding(.top, 20)
                     
-                    Text("Edit if needed ☺️")
+                    Text("Edit if needed")
                         .font(.custom("krungthep", size: 18))
                         .foregroundStyle(.text.opacity(0.7))
                     
@@ -54,7 +55,7 @@ struct ReviewTaskScreen: View {
                         TextField("Task title", text: $taskTitle)
                             .padding()
                             .background(Color.white)
-                            .cornerRadius(20)
+                            .cornerRadius(15)
                     }
                     .padding(.horizontal)
                     
@@ -78,11 +79,10 @@ struct ReviewTaskScreen: View {
                         
                         ForEach(subtasks.indices, id: \.self) { index in
                             HStack(spacing: 12) {
-                                TextEditor(text: $subtasks[index])
-                                    .frame(minHeight: 80)
-                                    .padding(8)
+                                TextField("Subtask", text: $subtasks[index])
+                                    .padding()
                                     .background(Color.white)
-                                    .cornerRadius(20)
+                                    .cornerRadius(12)
                                 
                                 Button {
                                     subtasks.remove(at: index)
@@ -187,7 +187,7 @@ struct ReviewTaskScreen: View {
                 .padding(.horizontal, 40)
             }
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(false)
     }
     
     private func saveTask() {
@@ -203,7 +203,24 @@ struct ReviewTaskScreen: View {
         )
         
         viewModel.tasksList.append(task)
-        dismiss()
+        
+        // Reset flags and dismiss back to TaskListScreen
+        viewModel.shouldShowReviewScreen = false
+        
+        // Dismiss both ReviewTaskScreen and AddTaskScreen
+        presentationMode.wrappedValue.dismiss()
+        
+        // Use a small delay to ensure the first dismiss completes
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // This will dismiss the AddTaskScreen
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first,
+               let rootViewController = window.rootViewController {
+                if let navigationController = rootViewController as? UINavigationController {
+                    navigationController.popToRootViewController(animated: true)
+                }
+            }
+        }
     }
 }
 

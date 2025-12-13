@@ -20,6 +20,7 @@ class TaskVM: ObservableObject {
     @Published var errorMessage: String?
     @Published var shouldShowRewriteScreen = false
     @Published var shouldShowReviewScreen = false
+    @Published var shouldDismissToTaskList = false
     @Published var pendingTaskTitle = ""
     @Published var pendingSubtasks: [SubTaskModel] = []
     @Published var pendingDescription = ""
